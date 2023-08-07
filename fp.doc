@@ -1,0 +1,113 @@
+
+
+		       FP QUICK REFERENCE GUIDE
+
+        		    - Kjell Post -
+
+
+			      I. OBJECTS
+
+[Not written yet, consult Backus paper]
+
+	T		true				(Atom)
+	F		false				(Atom)
+	!		bottom
+	0,1,2,3		non-negative integers		(Atom)
+	Foo, Fie	names				(Atom)
+	<x,y,z>		sequences
+	<>		empty sequence			(Atom)
+
+			 II. FUNCTIONAL FORMS
+
+Composition
+
+	f@g:x			==>	f:(g:x)
+
+Construction
+
+	[f1,f2,...,fN]:x 	==>	<f1:x,f2:x,...,fN:x>
+
+Condition
+
+	(f->g;h):x		==>	g:x if f:x ==> T
+					h:x if f:x ==> F
+					!, otherwise
+
+Constant
+
+	%x:y			==>	x
+
+Apply to all
+
+	&f:<x1,x2,...,xN>	==>	<f:x1,f:x2,...,f:xN>
+
+Right insert
+
+	'f:<>			==> 	<>
+	'f:<x1>			==>	x1
+	'f:<x1,x2,...,xN>	==>	f:<x1,'f:<x2,..,xN>>
+
+
+		       III. PRIMITIVE FUNCTIONS
+
+	id:x			==>	x
+
+	out:x			==>	x, with x appearing on the tty
+
+	1:<x1,x2,...xN>		==>	x1
+	2:<x1,x2,...xN>		==>	x2
+	etc
+
+	tl:<x1,x2,...,xN>	==>	<x2,...,xN>
+
+	null:<>			==>	T
+	null:<x1,x2,...,xN>	==>	F
+
+	reverse:<x1,x2,...,xN>	==>	<xN,...,x2,x1>
+
+	split:<x1,x2,..,xN>	==>	<<x1,..,xL>,<xM,...,xN>>
+					where L=N/2 and M=L+1
+
+	pair:<x1,x2,..,xN>	==>	<<x1,x2>,<x3,x4>,...,<xM,xN>>
+					where M=N-1
+
+	trans:<<a11,..,a1N>,	==>	<<a11,a21,...,aM1>,
+	       <a21,..,a2N>,	  	 <a12,a22,...,aM2>,
+		...			 ...
+	       <aM1,..,aMN>>		 <a1N,a2N,...,aMN>>
+
+	length:<x1,x2,...,xN>	==>	N
+
+	eq:<x,y>		==>	T if x=y
+				==>	F, otherwise
+
+	ne:<x,y>		==> 	F if x=y
+				==>	T, otherwise
+
+	lt:<x,y>		==>	Implements the obvious
+	le:<x,y>				 - " -
+	gt:<x,y>				 - " -
+	ge:<x,y>				 - " -
+	+:<x,y>					 - " -
+	-:<x,y>					 - " -
+	*:<x,y>				         - " -
+	/:<x,y>				         - " -
+ 	not:x
+
+	atom:x			==>	T, if x is an atom
+				==>	F, if x is a non-empty sequence
+
+	distl:<x,<y1,...,yN>>	==>	<<x,y1>,<x,y2>,...,<x,yN>>
+	distr:<<y1,...,yN>,x>	==>	<<y1,x>,<y2,x>,...,<yN,x>>
+
+	apndl:<x,<y1,...,yN>>	==>	<x,y1,y2,...,yN>
+	apndr:<<y1,...,yN>,x>	==>	<y1,y2,...,yN,x>
+
+	rotl:<x1,x2,...,xN>	==>	<x2,...,xN,x1>
+	rotr:<x1,x2,...,xN>	==>	<xN,x1,...,xL>
+					where L=N-1
+
+	concat:<<a1,a2,...>,	==>	<a1,a2,...,b1,b2,...,c1,c2,...>
+		<b1,b2,...>,
+		...
+		<c1,c2,...>>
